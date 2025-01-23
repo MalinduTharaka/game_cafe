@@ -1,143 +1,145 @@
 <div class="main-nav">
-     <!-- Sidebar Logo -->
-     <div class="logo-box">
-          <a href="index.html" class="logo-dark">
-               <img src="{{ asset('assets/images/logo-sm.png')}}" class="logo-sm" alt="logo sm">
-               <img src="{{ asset('assets/images/logo-dark.png')}}" class="logo-lg" alt="logo dark">
-          </a>
+    <!-- Sidebar Logo -->
+    <div class="logo-box">
+        <a href="/dashboard" class="logo-dark">
+            <img src="{{ asset('assets/images/playdium.jpg') }}" class="logo-sm" alt="logo sm">
+        </a>
 
-          <a href="index.html" class="logo-light">
-               <img src="{{ asset('assets/images/logo-sm.png')}}" class="logo-sm" alt="logo sm">
-               <img src="{{ asset('assets/images/logo-light.png')}}" class="logo-lg" alt="logo light">
-          </a>
-     </div>
+        <a href="/dashboard" class="logo-light">
+            <img src="{{ asset('assets/images/playdium.jpg') }}" class="logo-sm" alt="logo sm">
+        </a>
+    </div>
+    <style>
+        .logo-sm {
+            width: auto;
+            /* Increase the width */
+            height: auto;
+            /* Maintain aspect ratio */
+        }
+    </style>
 
-     <!-- Menu Toggle Button (sm-hover) -->
-     <button type="button" class="button-sm-hover" aria-label="Show Full Sidebar">
-          <iconify-icon icon="solar:hamburger-menu-broken" class="button-sm-hover-icon"></iconify-icon>
-     </button>
+    <!-- Menu Toggle Button (sm-hover) -->
+    <button type="button" class="button-sm-hover" aria-label="Show Full Sidebar">
+        <iconify-icon icon="solar:hamburger-menu-broken" class="button-sm-hover-icon"></iconify-icon>
+    </button>
 
-     <div class="scrollbar" data-simplebar>
+    <div class="scrollbar" data-simplebar>
 
-          <ul class="navbar-nav" id="navbar-nav">
+        <ul class="navbar-nav" id="navbar-nav">
 
-               <li class="menu-title">Menu</li>
+            <li class="menu-title">Menu</li>
 
-               @if(Auth::check() && Auth::user()->role === 'admin')
-
-               <li class="nav-item">
+            @if (Auth::check() && Auth::user()->role === 'admin')
+                <li class="nav-item">
                     <a class="nav-link" href="/dashboard">
-                         <span class="nav-icon">
-                              <iconify-icon icon="solar:home-2-broken"></iconify-icon>
-                         </span>
-                         <span class="nav-text"> Dashboard </span>
+                        <span class="nav-icon">
+                            <iconify-icon icon="solar:home-2-broken"></iconify-icon>
+                        </span>
+                        <span class="nav-text"> Dashboard </span>
                     </a>
-               </li>
+                </li>
 
-               <li class="nav-item">
+                <li class="nav-item">
                     <a class="nav-link" href="/device">
-                         <span class="nav-icon">
-                              <iconify-icon icon="solar:checklist-broken"></iconify-icon></iconify-icon>
-                         </span>
-                         <span class="nav-text"> Device Registration </span>
+                        <span class="nav-icon">
+                            <iconify-icon icon="solar:checklist-broken"></iconify-icon></iconify-icon>
+                        </span>
+                        <span class="nav-text"> Device Registration </span>
                     </a>
-               </li>
+                </li>
 
-               <li class="nav-item">
+                <li class="nav-item">
                     <a class="nav-link" href="/counter">
-                         <span class="nav-icon">
-                              <iconify-icon icon="solar:list-heart-minimalistic-broken"></iconify-icon></iconify-icon>
-                         </span>
-                         <span class="nav-text"> Count</span>
+                        <span class="nav-icon">
+                            <iconify-icon icon="solar:list-heart-minimalistic-broken"></iconify-icon></iconify-icon>
+                        </span>
+                        <span class="nav-text"> Count</span>
                     </a>
-               </li>
+                </li>
 
-               <li class="nav-item">
+                <li class="nav-item">
                     <a class="nav-link" href="/bill">
-                         <span class="nav-icon">
-                              <iconify-icon icon="solar:bill-list-broken"></iconify-icon></iconify-icon>
-                         </span>
-                         <span class="nav-text"> Bill</span>
+                        <span class="nav-icon">
+                            <iconify-icon icon="solar:bill-list-broken"></iconify-icon></iconify-icon>
+                        </span>
+                        <span class="nav-text"> Bill</span>
                     </a>
-               </li>
+                </li>
 
-               <li class="nav-item">
+                <li class="nav-item">
                     <a class="nav-link" href="/daily/income">
-                         <span class="nav-icon">
-                              <iconify-icon icon="solar:bill-list-broken"></iconify-icon></iconify-icon>
-                         </span>
-                         <span class="nav-text">Income</span>
+                        <span class="nav-icon">
+                            <iconify-icon icon="solar:bill-list-broken"></iconify-icon></iconify-icon>
+                        </span>
+                        <span class="nav-text">Income</span>
                     </a>
-               </li>
+                </li>
 
-               <li class="nav-item">
+                <li class="nav-item">
                     <a class="nav-link" href="/rates">
-                         <span class="nav-icon">
-                              <iconify-icon icon="solar:magic-stick-3-broken"></iconify-icon></iconify-icon>
-                         </span>
-                         <span class="nav-text"> Rates</span>
+                        <span class="nav-icon">
+                            <iconify-icon icon="solar:magic-stick-3-broken"></iconify-icon></iconify-icon>
+                        </span>
+                        <span class="nav-text"> Rates</span>
                     </a>
-               </li>
+                </li>
 
-               <li class="nav-item">
+                <li class="nav-item">
                     <a class="nav-link" href="/customer-registration">
-                         <span class="nav-icon">
-                              <iconify-icon icon="solar:magic-stick-3-broken"></iconify-icon></iconify-icon>
-                         </span>
-                         <span class="nav-text"> Customer</span>
+                        <span class="nav-icon">
+                            <iconify-icon icon="solar:magic-stick-3-broken"></iconify-icon></iconify-icon>
+                        </span>
+                        <span class="nav-text"> Customer</span>
                     </a>
-               </li>
+                </li>
 
-               <li class="nav-item">
+                <li class="nav-item">
                     <a class="nav-link" href="/report">
-                         <span class="nav-icon">
-                              <iconify-icon icon="solar:magic-stick-3-broken"></iconify-icon></iconify-icon>
-                         </span>
-                         <span class="nav-text"> Filter</span>
+                        <span class="nav-icon">
+                            <iconify-icon icon="solar:magic-stick-3-broken"></iconify-icon></iconify-icon>
+                        </span>
+                        <span class="nav-text"> Filter</span>
                     </a>
-               </li>
-
-               @elseif(Auth::check() && Auth::user()->role === 'counter')
-
-               <li class="nav-item">
+                </li>
+            @elseif(Auth::check() && Auth::user()->role === 'counter')
+                <li class="nav-item">
                     <a class="nav-link" href="/dashboard">
-                         <span class="nav-icon">
-                              <iconify-icon icon="solar:home-2-broken"></iconify-icon>
-                         </span>
-                         <span class="nav-text"> Dashboard </span>
+                        <span class="nav-icon">
+                            <iconify-icon icon="solar:home-2-broken"></iconify-icon>
+                        </span>
+                        <span class="nav-text"> Dashboard </span>
                     </a>
-               </li>
+                </li>
 
-               <li class="nav-item">
+                <li class="nav-item">
                     <a class="nav-link" href="/counter">
-                         <span class="nav-icon">
-                              <iconify-icon icon="solar:list-heart-minimalistic-broken"></iconify-icon></iconify-icon>
-                         </span>
-                         <span class="nav-text"> Count</span>
+                        <span class="nav-icon">
+                            <iconify-icon icon="solar:list-heart-minimalistic-broken"></iconify-icon></iconify-icon>
+                        </span>
+                        <span class="nav-text"> Count</span>
                     </a>
-               </li>
+                </li>
 
-               <li class="nav-item">
+                <li class="nav-item">
                     <a class="nav-link" href="/bill">
-                         <span class="nav-icon">
-                              <iconify-icon icon="solar:bill-list-broken"></iconify-icon></iconify-icon>
-                         </span>
-                         <span class="nav-text"> Bill</span>
+                        <span class="nav-icon">
+                            <iconify-icon icon="solar:bill-list-broken"></iconify-icon></iconify-icon>
+                        </span>
+                        <span class="nav-text"> Bill</span>
                     </a>
-               </li>
+                </li>
 
-               <li class="nav-item">
+                <li class="nav-item">
                     <a class="nav-link" href="/customer-registration">
-                         <span class="nav-icon">
-                              <iconify-icon icon="solar:magic-stick-3-broken"></iconify-icon></iconify-icon>
-                         </span>
-                         <span class="nav-text"> Customer</span>
+                        <span class="nav-icon">
+                            <iconify-icon icon="solar:magic-stick-3-broken"></iconify-icon></iconify-icon>
+                        </span>
+                        <span class="nav-text"> Customer</span>
                     </a>
-               </li>
+                </li>
+            @endif
 
-               @endif
-
-               {{-- <li class="menu-title">Apps</li>
+            {{-- <li class="menu-title">Apps</li>
 
                <li class="nav-item">
                     <a class="nav-link" href="apps-chat.html">
@@ -593,6 +595,6 @@
                          <span class="nav-text"> Disable Item </span>
                     </a>
                </li> <!-- end Demo Menu Item --> --}}
-          </ul>
-     </div>
+        </ul>
+    </div>
 </div>

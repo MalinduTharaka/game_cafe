@@ -24,7 +24,7 @@
                     <th>ID</th>
                     <th>Name</th>
                     <th>Phone</th>
-                    <th>NIC</th>
+                    <th>Email</th>
                     <th>Action</th>
                 </tr>
             </thead>
@@ -34,14 +34,14 @@
                         <td>{{ $customer->id }}</td>
                         <td>{{ $customer->name }}</td>
                         <td>{{ $customer->phone }}</td>
-                        <td>{{ $customer->nic }}</td>
+                        <td>{{ $customer->email }}</td>
                         <td>
                             <!-- Edit Button -->
 
                             <!-- Edit Button -->
                             <button class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#editCustomerModal"
                                 data-id="{{ $customer->id }}" data-name="{{ $customer->name }}"
-                                data-phone="{{ $customer->phone }}" data-nic="{{ $customer->nic }}">
+                                data-phone="{{ $customer->phone }}" data-email="{{ $customer->email }}">
                                 Edit
                             </button>
 
@@ -82,8 +82,8 @@
                                 <input type="text" class="form-control" id="phone" name="phone" required>
                             </div>
                             <div class="mb-3">
-                                <label for="nic" class="form-label">NIC</label>
-                                <input type="text" class="form-control" id="nic" name="nic" required>
+                                <label for="nic" class="form-label">Email</label>
+                                <input type="email" class="form-control" id="email" name="email" required>
                             </div>
                         </div>
                         <div class="modal-footer">
@@ -118,8 +118,8 @@
                                 <input type="text" class="form-control" id="editPhone" name="phone" required>
                             </div>
                             <div class="mb-3">
-                                <label for="editNIC" class="form-label">NIC</label>
-                                <input type="text" class="form-control" id="editNIC" name="nic" required>
+                                <label for="editNIC" class="form-label">Email</label>
+                                <input type="email" class="form-control" id="editEmail" name="email" required>
                             </div>
                         </div>
                         <div class="modal-footer">
@@ -144,13 +144,13 @@
             const id = button.getAttribute('data-id');
             const name = button.getAttribute('data-name');
             const phone = button.getAttribute('data-phone');
-            const nic = button.getAttribute('data-nic');
+            const email = button.getAttribute('data-email');
 
             // Populate the form fields with the customer data
             document.getElementById('editCustomerId').value = id;
             document.getElementById('editName').value = name;
             document.getElementById('editPhone').value = phone;
-            document.getElementById('editNIC').value = nic;
+            document.getElementById('editEmail').value = email;
 
             // Set the form action dynamically
             editCustomerForm.action = `/customers/${id}`;

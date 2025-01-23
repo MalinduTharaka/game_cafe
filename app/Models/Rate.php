@@ -20,6 +20,10 @@ class Rate extends Model
      */
     protected $fillable = [
         'type',
-        'rate'
+        'rate1',
+        'rate2',
+        'rate2half',
+        'rate3',
+        'rate3half'
     ];
 }

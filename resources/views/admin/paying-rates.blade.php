@@ -23,7 +23,11 @@
                 <tr>
                     <th>ID</th>
                     <th>Device Type</th>
-                    <th>Rate Per Hour</th>
+                    <th>1st hour</th>
+                    <th>next 4 hour</th>
+                    <th>next 4 hours half hour rate</th>
+                    <th>next hours</th>
+                    <th>next hours half hour rate</th>
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -32,15 +36,20 @@
                     <tr>
                         <td>{{ $rate->id }}</td>
                         <td>{{ $rate->type }}</td>
-                        <td>{{ $rate->rate }}</td>
+                        <td>{{ $rate->rate1 }}</td>
+                        <td>{{ $rate->rate2 }}</td>
+                        <td>{{ $rate->rate2half }}</td>
+                        <td>{{ $rate->rate3 }}</td>
+                        <td>{{ $rate->rate3half }}</td>
                         <td>
                             <!-- Edit Button -->
                             <button class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#editRateModal"
                                 data-id="{{ $rate->id }}" data-type="{{ $rate->type }}"
-                                data-rate="{{ $rate->rate }}">
+                                data-rate1="{{ $rate->rate1 }}" data-rate2="{{ $rate->rate2 }}"
+                                data-rate2half="{{ $rate->rate2half }}" data-rate3="{{ $rate->rate3 }}"
+                                data-rate3half="{{ $rate->rate3half }}">
                                 Edit
                             </button>
-
                             <!-- Delete Button -->
                             <form action="{{ route('rates.destroy', $rate->id) }}" method="POST" class="d-inline">
                                 @csrf
@@ -73,8 +82,28 @@
                                 <input type="text" class="form-control" id="type" name="type" required>
                             </div>
                             <div class="mb-3">
-                                <label for="rate" class="form-label">Rate Per Hour</label>
-                                <input type="number" step="0.01" class="form-control" id="rate" name="rate"
+                                <label for="rate" class="form-label">Rate 1st hour</label>
+                                <input type="number" step="0.01" class="form-control" id="rate1" name="rate1"
+                                    required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="rate" class="form-label">Rate next 4 hours</label>
+                                <input type="number" step="0.01" class="form-control" id="rate2" name="rate2"
+                                    required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="rate" class="form-label">Half rate for next 4 hours </label>
+                                <input type="number" step="0.01" class="form-control" id="rate2half" name="rate2half"
+                                    required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="rate" class="form-label">Rate next hours</label>
+                                <input type="number" step="0.01" class="form-control" id="rate3" name="rate3"
+                                    required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="rate" class="form-label">Half rate for next hours </label>
+                                <input type="number" step="0.01" class="form-control" id="rate3half" name="rate3half"
                                     required>
                             </div>
                         </div>
@@ -96,7 +125,8 @@
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title" id="editRateModalLabel">Edit Rate</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
                             <input type="hidden" id="editRateId" name="id">
@@ -105,9 +135,29 @@
                                 <input type="text" class="form-control" id="editType" name="type" required>
                             </div>
                             <div class="mb-3">
-                                <label for="editRate" class="form-label">Rate Per Hour</label>
-                                <input type="number" step="0.01" class="form-control" id="editRate" name="rate"
+                                <label for="editRate" class="form-label">Rate 1st hour</label>
+                                <input type="number" step="0.01" class="form-control" id="editRate1" name="rate1"
                                     required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="editRate" class="form-label">Rate next 4 hours</label>
+                                <input type="number" step="0.01" class="form-control" id="editRate2" name="rate2"
+                                    required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="rate" class="form-label">Half rate for next 4 hours </label>
+                                <input type="number" step="0.01" class="form-control" id="editRate2half"
+                                    name="rate2half" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="editRate" class="form-label">Rate next hours</label>
+                                <input type="number" step="0.01" class="form-control" id="editRate3" name="rate3"
+                                    required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="rate" class="form-label">Half rate for next hours </label>
+                                <input type="number" step="0.01" class="form-control" id="editrate3half"
+                                    name="rate3half" required>
                             </div>
                         </div>
                         <div class="modal-footer">
@@ -131,23 +181,23 @@
             const button = event.relatedTarget; // Button that triggered the modal
             const id = button.getAttribute('data-id');
             const type = button.getAttribute('data-type');
-            const rate = button.getAttribute('data-rate');
+            const rate1 = button.getAttribute('data-rate1');
+            const rate2 = button.getAttribute('data-rate2');
+            const rate2half = button.getAttribute('data-rate2half');
+            const rate3 = button.getAttribute('data-rate3');
+            const rate3half = button.getAttribute('data-rate3half');
 
             // Populate the form fields with the rate data
             document.getElementById('editRateId').value = id;
             document.getElementById('editType').value = type;
-            document.getElementById('editRate').value = rate;
+            document.getElementById('editRate1').value = rate1;
+            document.getElementById('editRate2').value = rate2;
+            document.getElementById('editRate2half').value = rate2half;
+            document.getElementById('editRate3').value = rate3;
+            document.getElementById('editrate3half').value = rate3half;
 
             // Set the form action dynamically
             editRateForm.action = `/rates/${id}`;
         });
-
-        const successMessage = document.getElementById('success-message');
-        if (successMessage) {
-            setTimeout(function() {
-                successMessage.style.opacity = '0'; // Fade out
-                setTimeout(() => successMessage.remove(), 500); // Remove after fade-out
-            }, 2000); // 2 seconds
-        }
     });
 </script>

@@ -153,7 +153,7 @@
                             <!-- item-->
                             <h6 class="dropdown-header">Welcome Gaston!</h6>
                   
-                            <a class="dropdown-item" href="apps-chat.html">
+                            {{-- <a class="dropdown-item" href="apps-chat.html">
                                  <i class="bx bx-message-dots text-muted fs-18 align-middle me-1"></i><span class="align-middle">Messages</span>
                             </a>
 
@@ -165,7 +165,7 @@
                             </a>
                             <a class="dropdown-item" href="auth-lock-screen.html">
                                  <i class="bx bx-lock text-muted fs-18 align-middle me-1"></i><span class="align-middle">Lock screen</span>
-                            </a>
+                            </a> --}}
 
                             <div class="dropdown-divider my-1"></div>
 

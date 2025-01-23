@@ -10,6 +10,7 @@ use App\Http\Controllers\QrController;
 use App\Http\Controllers\RateController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\CustomerCreateController;
+use App\Http\Controllers\PaymentController;
 use Illuminate\Support\Facades\Auth;
 
 Route::get('/', function () {
@@ -67,6 +68,8 @@ Route::middleware([
     Route::put('/customers/{id}', [CustomerCreateController::class, 'update'])->name('customer.update');
     Route::delete('/customers/{id}', [CustomerCreateController::class, 'destroy'])->name('customer.destroy');
 
+    //Pyment Routes
+    Route::post('/generate-bill', [PaymentController::class, 'index']);
 
 
 

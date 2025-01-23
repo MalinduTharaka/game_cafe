@@ -25,7 +25,7 @@ class DeviceController extends Controller
     {
         $request->validate([
             'name' => 'required|string',
-            'type' => 'required|string|in:pc,ps,xbox',
+            'type' => 'required|string',
         ]);
 
         $device = Device::create($request->all());

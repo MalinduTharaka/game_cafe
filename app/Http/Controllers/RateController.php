@@ -24,7 +24,11 @@ class RateController extends Controller
         // Validate only the type and rate fields
         $request->validate([
             'type' => 'required|string|max:255',
-            'rate' => 'required|numeric', // Removed device_type
+            'rate1' => 'required|numeric', // Removed device_type
+            'rate2' => 'nullable|numeric',
+            'rate3' => 'nullable|numeric',
+            'rate2half' => 'nullable|numeric',
+            'rate3half' => 'nullable|numeric',
         ]);
 
         // Create a new rate record in the database
@@ -42,7 +46,11 @@ class RateController extends Controller
         // Validate only the type and rate fields
         $request->validate([
             'type' => 'required|string|max:255',
-            'rate' => 'required|numeric', // Removed device_type
+            'rate1' => 'required|numeric', // Removed device_type
+            'rate2' => 'nullable|numeric',
+            'rate3' => 'nullable|numeric',
+            'rate2half' => 'nullable|numeric',
+            'rate3half' => 'nullable|numeric',
         ]);
 
         // Find the rate and update it with the new values

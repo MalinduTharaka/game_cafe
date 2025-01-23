@@ -61,7 +61,7 @@
      <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
      <!-- App favicon -->
-     <link rel="shortcut icon" href="assets/images/favicon.ico">
+     <link rel="shortcut icon" href="assets/images/playdium.jpg">
 
      <!-- Vendor css (Require in all Page) -->
      <link href="assets/css/vendor.min.css" rel="stylesheet" type="text/css" />
@@ -87,17 +87,8 @@
                          <div class="card auth-card">
                               <div class="card-body px-3 py-5">
                                    <div class="mx-auto mb-4 text-center auth-logo">
-                                        <a href="index.html" class="logo-dark">
-                                             <img src="assets/images/logo-sm.png" height="30" class="me-1" alt="logo sm">
-                                             <img src="assets/images/logo-dark.png" height="24" alt="logo dark">
-                                        </a>
-
-                                        <a href="index.html" class="logo-light">
-                                             <img src="assets/images/logo-sm.png" height="30" class="me-1" alt="logo sm">
-                                             <img src="assets/images/logo-light.png" height="24" alt="logo light">
-                                        </a>
+                                        <img src="assets/images/playdium.jpg" height="80" class="me-1" alt="logo sm">
                                    </div>
-
                                    <h2 class="fw-bold text-center fs-18">Sign In</h2>
                                    <p class="text-muted text-center mt-1 mb-4">Enter your email address and password to access admin panel.</p>
 

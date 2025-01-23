@@ -18,7 +18,7 @@ class CustomerCreateController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'phone' => 'required|string|max:20',
-            'nic' => 'required|string|max:20|unique:customers,nic',
+            'email' => 'required|email|max:255|unique:customers,email',
         ]);
 
         Customer::create($request->all());
@@ -36,7 +36,7 @@ class CustomerCreateController extends Controller
     $request->validate([
         'name' => 'required|string|max:255',
         'phone' => 'required|string|max:15',
-        'nic' => 'required|string|max:20',
+        'email' => 'required|email|max:255',
     ]);
 
     $customer = Customer::findOrFail($id);
