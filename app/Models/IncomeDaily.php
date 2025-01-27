@@ -24,8 +24,7 @@ class IncomeDaily extends Model
     protected $fillable = [
         'date',
         'duration',
-        'amount',
-        'discount_amount',
+        'discount_time',
         'total',
     ];
 }

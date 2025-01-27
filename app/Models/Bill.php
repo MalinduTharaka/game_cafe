@@ -24,9 +24,8 @@ class Bill extends Model
     protected $fillable = [
         'device_id',
         'duration',
-        'amount',
         'discount_availability',
-        'discount_amount',
+        'discount_time',
         'date',
         'total_amount',
     ];

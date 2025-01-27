@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Customer;
 use App\Models\Device;
+use App\Models\GmSession;
 use App\Models\Rate;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class PaymentController extends Controller
@@ -21,9 +24,13 @@ class PaymentController extends Controller
                 'rate3half' => (float) $rate->rate3half,
             ];
         });
+
+        $customers = Customer::all();
+
+        $gmid = GmSession::find($request->id);
         
         $devices = Device::all();
-        return view('counter.bill', compact('data', 'rates', 'devices'));
+        return view('counter.bill', compact('data', 'rates', 'devices','customers','gmid'));
     }
 
 }

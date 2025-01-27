@@ -146,12 +146,12 @@
                   <div class="dropdown topbar-item">
                        <a type="button" class="topbar-button" id="page-header-user-dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <span class="d-flex align-items-center">
-                                 <img class="rounded-circle" width="32" src="assets/images/users/avatar-1.jpg" alt="avatar-3">
+                                 <img class="rounded-circle" width="32" src="{{asset('assets/images/users/avatar-1.jpg')}}" alt="avatar-3">
                             </span>
                        </a>
                        <div class="dropdown-menu dropdown-menu-end">
                             <!-- item-->
-                            <h6 class="dropdown-header">Welcome Gaston!</h6>
+                            <h6 class="dropdown-header">Welcome {{ Auth::check() ? Auth::user()->name : 'Guest' }}!</h6>
                   
                             {{-- <a class="dropdown-item" href="apps-chat.html">
                                  <i class="bx bx-message-dots text-muted fs-18 align-middle me-1"></i><span class="align-middle">Messages</span>

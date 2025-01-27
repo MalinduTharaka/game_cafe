@@ -98,31 +98,7 @@
               </div> <!-- end card body -->
          </div> <!-- end card -->
     </div> <!-- end col -->
-    <div class="col-md-6 col-xl-2">
-         <div class="card">
-              <div class="card-body">
-                   <div class="row">
-                        <div class="col-12 text-start">
-                             <p class="text-muted mb-0 text-truncate">Amount</p>
-                             <h3 class="text-dark mt-1 mb-0" id="amount"></h3>
-                        </div> <!-- end col -->
-                   </div> <!-- end row-->
-              </div> <!-- end card body -->
-         </div> <!-- end card -->
-    </div> <!-- end col -->
-    <div class="col-md-6 col-xl-2">
-         <div class="card">
-              <div class="card-body">
-                   <div class="row">
-                        <div class="col-12 text-start">
-                             <p class="text-muted mb-0 text-truncate">Discount Amount</p>
-                             <h3 class="text-dark mt-1 mb-0" id="discount-amount"></h3>
-                        </div> <!-- end col -->
-                   </div> <!-- end row-->
-              </div> <!-- end card body -->
-         </div> <!-- end card -->
-    </div> <!-- end col -->
-    <div class="col-md-6 col-xl-2">
+    <div class="col-md-6 col-xl-4">
          <div class="card">
               <div class="card-body">
                    <div class="row">
@@ -134,7 +110,7 @@
               </div> <!-- end card body -->
          </div> <!-- end card -->
     </div> <!-- end col -->
-    <div class="col-md-6 col-xl-2">
+    <div class="col-md-6 col-xl-4">
         <div class="card">
              <div class="card-body">
                   <div class="row">
@@ -158,9 +134,8 @@
                             <tr>
                                 <th scope="col">Device Name</th>
                                 <th scope="col">Duration</th>
-                                <th scope="col">Amount</th>
                                 <th scope="col">Discount Availability</th>
-                                <th scope="col">Discount Amount</th>
+                                <th scope="col">Discount hours</th>
                                 <th scope="col">Date</th>
                                 <th scope="col">Total Amount</th>
                             </tr>
@@ -170,9 +145,8 @@
                             <tr>
                                 <td>{{ $bill->device->name }}</td>
                                 <td>{{ $bill->duration }}</td>
-                                <td>{{ $bill->amount }}</td>
-                                <td>{{ $bill->discount_availability }}</td>
-                                <td>{{ $bill->discount_amount }}</td>
+                                <td>{{ $bill->discount_availability == 1 ? 'Yes' : 'No' }}</td>
+                                <td>{{ $bill->discount_time }}</td>
                                 <td>{{ $bill->date }}</td>
                                 <td>{{ $bill->total_amount }}</td>
                             </tr>
@@ -192,26 +166,21 @@
         const rows = table.querySelectorAll("tbody tr");
 
         let totalDuration = 0;
-        let totalAmount = 0;
-        let totalDiscountAmount = 0;
+        let totalDiscountHours = 0;
         let totalTotalAmount = 0;
 
         rows.forEach(row => {
-            const duration = parseFloat(row.cells[1].textContent) || 0;
-            const amount = parseFloat(row.cells[2].textContent) || 0;
-            const discountAmount = parseFloat(row.cells[4].textContent) || 0;
-            const totalAmountRow = parseFloat(row.cells[6].textContent) || 0;
+            const duration = parseFloat(row.cells[1].textContent) || 0; // Duration is in the second column
+            const discountHours = parseFloat(row.cells[3].textContent) || 0; // Discount Hours is in the fourth column
+            const totalAmountRow = parseFloat(row.cells[5].textContent) || 0; // Total Amount is in the sixth column
 
             totalDuration += duration;
-            totalAmount += amount;
-            totalDiscountAmount += discountAmount;
+            totalDiscountHours += discountHours;
             totalTotalAmount += totalAmountRow;
         });
 
         // Update the DOM with calculated values
         document.getElementById("duration").textContent = `${totalDuration} hrs`;
-        document.getElementById("amount").textContent = `Rs. ${totalAmount}`;
-        document.getElementById("discount-amount").textContent = `Rs. ${totalDiscountAmount}`;
         document.getElementById("total-amount").textContent = `Rs. ${totalTotalAmount}`;
         document.getElementById("transaction-count").textContent = `${rows.length}`;
     }
@@ -219,6 +188,7 @@
     // Run the calculation after the page has loaded
     window.onload = calculateReport;
 </script>
+
 
 
 

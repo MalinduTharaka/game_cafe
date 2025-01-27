@@ -93,8 +93,7 @@
                               <tr>
                                    <th scope="col">Date</th>
                                    <th scope="col">Duration (hrs)</th>
-                                   <th scope="col">Amount (Rs)</th>
-                                   <th scope="col">Discount Amount (Rs)</th>
+                                   <th scope="col">Discount Hours (Hrs)</th>
                                    <th scope="col">Total (Rs)</th>
                               </tr>
                          </thead>
@@ -103,8 +102,7 @@
                                    <tr>
                                         <td>{{ $dailyincome->date }}</td>
                                         <td>{{ $dailyincome->duration }}</td>
-                                        <td>{{ $dailyincome->amount }}</td>
-                                        <td>{{ $dailyincome->discount_amount }}</td>
+                                        <td>{{ $dailyincome->discount_time }}</td>
                                         <td>{{ $dailyincome->total }}</td>
                                    </tr>
                               @endforeach

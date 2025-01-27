@@ -4,8 +4,7 @@
 
 <input type="date" name="date" value="{{$dateofbill}}" hidden>
 <input type="number" name="duration" value="{{$totalDurationToday}}" hidden>
-<input type="number" name="amount" value="{{$totaloftotal_Amount}}" hidden>
-<input type="number" name="discount_amount" value="{{$totalDiscountAmount}}" hidden>
+<input type="number" name="discount_time" value="{{$totalDiscountTime}}" hidden>
 <input type="number" name="total" value="{{$totalAmount}}" hidden>
 
 
@@ -26,8 +25,7 @@
              // Get input values
              const date = document.querySelector('input[name="date"]').value || new Date().toISOString().split('T')[0];
              const duration = document.querySelector('input[name="duration"]').value || "0";
-             const amount = document.querySelector('input[name="amount"]').value || "0";
-             const discount_amount = document.querySelector('input[name="discount_amount"]').value || "0";
+             const discount_time = document.querySelector('input[name="discount_time"]').value || "0";
              const total = document.querySelector('input[name="total"]').value || "0";
  
              // Post the data using fetch
@@ -40,8 +38,7 @@
                  body: JSON.stringify({
                      date,
                      duration,
-                     amount,
-                     discount_amount,
+                     discount_time,
                      total
                  })
              })
@@ -80,7 +77,7 @@
               </div> <!-- end card body -->
          </div> <!-- end card -->
     </div> <!-- end col -->
-    <div class="col-md-6 col-xl-3">
+    {{-- <div class="col-md-6 col-xl-3">
          <div class="card">
               <div class="card-body">
                    <div class="row">
@@ -96,7 +93,7 @@
                    </div> <!-- end row-->
               </div> <!-- end card body -->
          </div> <!-- end card -->
-    </div> <!-- end col -->
+    </div> <!-- end col --> --}}
     <div class="col-md-6 col-xl-3">
          <div class="card">
               <div class="card-body">
@@ -107,8 +104,8 @@
                              </div>
                         </div> <!-- end col -->
                         <div class="col-8 text-end">
-                             <p class="text-muted mb-0 text-truncate">Total discount amount</p>
-                             <h3 class="text-dark mt-1 mb-0" id="discount-amount">Rs. {{$totalDiscountAmount}}/=</h3>
+                             <p class="text-muted mb-0 text-truncate">Total discount hours</p>
+                             <h3 class="text-dark mt-1 mb-0" id="discount-amount">{{$totalDiscountTime}} hrs</h3>
                         </div> <!-- end col -->
                    </div> <!-- end row-->
               </div> <!-- end card body -->
@@ -146,9 +143,8 @@
                               <tr>
                                    <th scope="col">Device</th>
                                    <th scope="col">Duration (hrs)</th>
-                                   <th scope="col">Amount (Rs)</th>
                                    <th scope="col">Discount Given</th>
-                                   <th scope="col">Discount Amount (Rs)</th>
+                                   <th scope="col">Discount Hours (hrs)</th>
                                    <th scope="col">Total Amount (Rs)</th>
                               </tr>
                          </thead>
@@ -157,9 +153,8 @@
                                    <tr>
                                         <td>{{ $bill->device->name }}</td>
                                         <td>{{ $bill->duration }}</td>
-                                        <td>{{ $bill->amount }}</td>
                                         <td>{{ $bill->discount_availability == 1 ? 'Yes' : 'No' }}</td>
-                                        <td>{{ $bill->discount_amount }}</td>
+                                        <td>{{ $bill->discount_time }}</td>
                                         <td>{{ $bill->total_amount }}</td>
                                    </tr>
                               @endforeach

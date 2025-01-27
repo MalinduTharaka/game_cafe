@@ -37,7 +37,7 @@ Route::middleware([
     Route::delete('devices/delete/{id}', [DeviceController::class, 'delete']);
 
     //Counter routes
-    Route::get('/counter', [CounterController::class, 'index']);
+    Route::get('/counter', [CounterController::class, 'index'])->name('counter.index');
     Route::get('session/approve/{id}', [SessionController::class, 'approveSession']);
     Route::get('session/decline/{id}', [SessionController::class, 'declineSession']);
     Route::get('session/stop/{id}', [SessionController::class, 'stopSession']);
@@ -49,6 +49,7 @@ Route::middleware([
     //Bill Routes
     Route::get('/bill', [BillController::class, 'index']);
     Route::post('/save-bill/{id}', [BillController::class, 'store'])->name('bill.store');
+    Route::post('/pay-bill', [BillController::class, 'payBill'])->name('payBill');
 
     //Daily income
     Route::get('/daily/income', [BillController::class, 'indexDailyIncome']);

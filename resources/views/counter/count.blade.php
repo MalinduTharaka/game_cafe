@@ -160,6 +160,7 @@
                         <p>Duration: <span id="modal-duration"></span></p>
 
                         {{-- Hidden Inputs for Form --}}
+                        <input type="hidden" id="form-id" name="id">
                         <input type="hidden" name="device_id" id="form-device-id">
                         <input type="hidden" name="device_name" id="form-device-name">
                         <input type="hidden" name="device_type" id="form-device-type">
@@ -184,6 +185,7 @@
             modal.addEventListener('show.bs.modal', function(event) {
                 const button = event.relatedTarget;
 
+                const id = button.getAttribute('data-gmsession-id');
                 const deviceId = button.getAttribute('data-device-id');
                 const deviceName = button.getAttribute('data-device-name');
                 const deviceType = button.getAttribute('data-device-type');
@@ -216,6 +218,7 @@
                 modal.querySelector('#modal-duration').textContent = formattedDuration;
 
                 // Set form fields
+                modal.querySelector('#form-id').value = id;
                 modal.querySelector('#form-device-id').value = deviceId;
                 modal.querySelector('#form-device-name').value = deviceName;
                 modal.querySelector('#form-device-type').value = deviceType;

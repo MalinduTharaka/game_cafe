@@ -23,55 +23,48 @@ class BillController extends Controller
     // Calculate totals
     $totalDurationToday = $bills->sum('duration');
     $totaloftotal_Amount = $bills->sum('total_amount');
-    $totalDiscountAmount = $bills->sum('discount_amount');
-    $totalAmount = $bills->sum('amount');
+    $totalDiscountTime = $bills->sum('discount_time');
+    $totalAmount = $bills->sum('total_amount');
     
     // Get the formatted date for today's bills
     $dateofbill = Carbon::today('Asia/Colombo')->format('Y-m-d');
     
     // Pass data to the view
-    return view('counter.bill-detail', compact('bills', 'rates', 'totalDurationToday', 'totaloftotal_Amount', 'totalDiscountAmount', 'totalAmount', 'dateofbill'));
+    return view('counter.bill-detail', compact('bills', 'rates', 'totalDurationToday', 'totaloftotal_Amount', 'totalDiscountTime', 'totalAmount', 'dateofbill'));
 }
 
 
-    public function store(Request $request, $id)
+public function payBill(Request $request)
     {
-        // Validate the request data
-        $validated = $request->validate([
-            'device_id' => 'required|exists:devices,id',
-            'duration' => 'required',
-            'amount' => 'required|numeric',
+        // Validate the incoming data
+        $request->validate([
+            'device_id' => 'required|integer',
+            'duration' => 'required|numeric',
             'discount_availability' => 'required|boolean',
-            'discount_amount' => 'required|numeric',
+            'discount_hours' => 'required|string',
             'date' => 'required|date',
             'total_amount' => 'required|numeric',
         ]);
 
-        // Find the GmSession by ID
-        $gmsession = GmSession::find($id);
+        // Create a new bill entry
+        $bill = new Bill();
+        $bill->device_id = $request->device_id;
+        $bill->duration = $request->duration;
+        $bill->discount_availability = $request->discount_availability;
+        $bill->discount_time = $request->discount_hours;
+        $bill->date = Carbon::parse($request->date);  // Ensure date is correctly parsed
+        $bill->total_amount = $request->total_amount;
+        $gmSession = GmSession::find($request->id);
+        $gmSession->payment = 'done'; // Assuming this is the correct column
+        $gmSession->save();
 
-        if (!$gmsession) {
-            return response()->json([
-                'success' => false,
-                'message' => 'GmSession not found.',
-            ], 404);
+        // Save the bill
+        if ($bill->save()) {
+            return response()->json(['success' => true]);
+        } else {
+            return response()->json(['success' => false]);
         }
-
-        // Update the payment status of the GmSession
-        $gmsession->payment = 'done';
-        $gmsession->save();
-
-        // Create a new Bill with the validated data
-        $bill = Bill::create($validated);
-
-        // Return a success response
-        return response()->json([
-            'success' => true,
-            'message' => 'Bill saved successfully.',
-            'bill' => $bill,
-        ]);
     }
-
 
 
     public function indexDailyIncome()
@@ -88,8 +81,7 @@ class BillController extends Controller
         $validated = $request->validate([
             'date' => 'required|date',
             'duration' => 'required|numeric',
-            'amount' => 'required|numeric',
-            'discount_amount' => 'required|numeric',
+            'discount_time' => 'required|numeric',
             'total' => 'required|numeric',
         ]);
 
@@ -97,8 +89,7 @@ class BillController extends Controller
         IncomeDaily::create([
             'date' => $validated['date'],
             'duration' => $validated['duration'],
-            'amount' => $validated['amount'],
-            'discount_amount' => $validated['discount_amount'],
+            'discount_time' => $validated['discount_time'],
             'total' => $validated['total'],
         ]);
 
