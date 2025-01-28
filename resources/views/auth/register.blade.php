@@ -90,7 +90,7 @@
 
 <body class="authentication-bg">
 
-     <div class="account-pages pt-2 pt-sm-5 pb-4 pb-sm-5">
+     {{-- <div class="account-pages pt-2 pt-sm-5 pb-4 pb-sm-5">
           <div class="container">
                <div class="row justify-content-center">
                     <div class="col-xl-5">
@@ -169,7 +169,7 @@
                     </div> <!-- end col -->
                </div> <!-- end row -->
           </div>
-     </div>
+     </div> --}}
 
 
      <!-- Vendor Javascript (Require in all Page) -->

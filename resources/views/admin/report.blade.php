@@ -22,7 +22,7 @@
             </div>
 
             <!-- Discount Availability Filter -->
-            <div class="col-md-6">
+            {{-- <div class="col-md-6">
                 <div class="card-body">
                     <h5 class="card-title mb-1">Discount Availability</h5>
                     <div class="w-100 mb-3">
@@ -33,7 +33,7 @@
                         </select>
                     </div>
                 </div>
-            </div>
+            </div> --}}
 
             <!-- Date Filter -->
             <div class="col-md-6">
@@ -134,7 +134,7 @@
                             <tr>
                                 <th scope="col">Device Name</th>
                                 <th scope="col">Duration</th>
-                                <th scope="col">Discount Availability</th>
+                                <th scope="col">Customer</th>
                                 <th scope="col">Discount hours</th>
                                 <th scope="col">Date</th>
                                 <th scope="col">Total Amount</th>
@@ -145,7 +145,9 @@
                             <tr>
                                 <td>{{ $bill->device->name }}</td>
                                 <td>{{ $bill->duration }}</td>
-                                <td>{{ $bill->discount_availability == 1 ? 'Yes' : 'No' }}</td>
+                                <td>
+                                    {{ $bill->customer ? ($bill->customer->phone == '' ? 'None Registered' : $bill->customer->phone) : 'None Registered Customer' }}
+                               </td>
                                 <td>{{ $bill->discount_time }}</td>
                                 <td>{{ $bill->date }}</td>
                                 <td>{{ $bill->total_amount }}</td>

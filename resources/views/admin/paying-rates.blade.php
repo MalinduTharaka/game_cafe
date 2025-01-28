@@ -17,6 +17,66 @@
             New Rate
         </button>
 
+        <div class="mt-5 mb-5">
+            <form id="discountForm" action="/discountUpdate/1" method="POST">
+                @csrf
+                @method('PUT')
+                <label class="mb-2">Choose Today Discount</label><br>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="time" id="inlineRadio1" value="0.00">
+                    <label class="form-check-label" for="inlineRadio1">No Discount</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="time" id="inlineRadio2" value="5.00">
+                    <label class="form-check-label" for="inlineRadio2">5 minutes</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="time" id="inlineRadio3" value="10.00">
+                    <label class="form-check-label" for="inlineRadio3">10 minutes</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="time" id="inlineRadio4" value="15.00">
+                    <label class="form-check-label" for="inlineRadio4">15 minutes</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="time" id="inlineRadio5" value="0.5">
+                    <label class="form-check-label" for="inlineRadio5">30 minutes</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="time" id="inlineRadio6" value="45.00">
+                    <label class="form-check-label" for="inlineRadio6">45 minutes</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="time" id="inlineRadio7" value="1.00">
+                    <label class="form-check-label" for="inlineRadio7">1 hour</label>
+                </div>
+            </form>
+            @foreach ($discounts as $discount)
+                <input type="text" readonly class="form-control" style = "width:25%" value="{{ 
+                    $discount->time == 0.00 ? '0 minutes' : (
+                    $discount->time == 0.50 ? '30 minutes' : (
+                    $discount->time == 1.00 ? '1 hour' : (
+                    $discount->time == 5.00 ? '5 minutes' : (
+                    $discount->time == 10.00 ? '10 minutes' : (
+                    $discount->time == 15.00 ? '15 minutes' : (
+                    $discount->time == 45.00 ? '45 minutes' : $discount->time
+                    )))))) 
+                }}">
+            @endforeach
+        </div>
+
+        <script>
+            // Add an event listener to all radio buttons
+            document.querySelectorAll('input[name="time"]').forEach(function(radio) {
+                radio.addEventListener('change', function() {
+                    // Submit the form when a radio button is selected
+                    document.getElementById('discountForm').submit();
+                });
+            });
+        </script>
+
+        
+
         <!-- Rate Table -->
         <table class="table table-striped table-sm">
             <thead>
@@ -66,7 +126,7 @@
         </table>
 
         <!-- Create Rate Modal -->
-        <div class="modal fade" id="createRateModal" tabindex="-1" aria-labelledby="createRateModalLabel"
+        <div class="modal fade" id="createRateModal" tabindex="-1" data-bs-backdrop="static" aria-labelledby="createRateModalLabel"
             aria-hidden="true">
             <div class="modal-dialog">
                 <form method="POST" action="{{ route('rates.store') }}">
@@ -93,8 +153,8 @@
                             </div>
                             <div class="mb-3">
                                 <label for="rate" class="form-label">Half rate for next 4 hours </label>
-                                <input type="number" step="0.01" class="form-control" id="rate2half" name="rate2half"
-                                    required>
+                                <input type="number" step="0.01" class="form-control" id="rate2half"
+                                    name="rate2half" required>
                             </div>
                             <div class="mb-3">
                                 <label for="rate" class="form-label">Rate next hours</label>
@@ -103,8 +163,8 @@
                             </div>
                             <div class="mb-3">
                                 <label for="rate" class="form-label">Half rate for next hours </label>
-                                <input type="number" step="0.01" class="form-control" id="rate3half" name="rate3half"
-                                    required>
+                                <input type="number" step="0.01" class="form-control" id="rate3half"
+                                    name="rate3half" required>
                             </div>
                         </div>
                         <div class="modal-footer">
@@ -117,7 +177,8 @@
         </div>
 
         <!-- Edit Rate Modal -->
-        <div class="modal fade" id="editRateModal" tabindex="-1" aria-labelledby="editRateModalLabel" aria-hidden="true">
+        <div class="modal fade" id="editRateModal" tabindex="-1" data-bs-backdrop="static" aria-labelledby="editRateModalLabel"
+            aria-hidden="true">
             <div class="modal-dialog">
                 <form id="editRateForm" method="POST" action="">
                     @csrf

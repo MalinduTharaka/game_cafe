@@ -76,53 +76,20 @@
                                         <tr>
                                             <th class="border-0 py-2">Device Name</th>
                                             <th class="border-0 py-2">Duration</th>
-                                            <th class="border-0 py-2">User</th>
-                                            <th class="text-end border-0 py-2">Calculate</th>
+                                            <th class="text-end border-0 py-2">Discount</th>
                                         </tr>
                                     </thead> <!-- end thead -->
                                     <tbody>
                                         <tr>
                                             <td>{{ $data['device_name'] }}</td>
                                             <td><span id="duration">{{ $data['duration'] }}</td>
-                                            <td>
-                                                <select id="users" class="form-control">
-                                                    <option value="0">Unknown</option>
-                                                    @foreach ($customers as $customer)
-                                                        <option value="{{ $customer->email }}"
-                                                            data-created-at="{{ $customer->created_at }}">
-                                                            {{ $customer->name }} : {{ $customer->email }}
-                                                        </option>
+                                            <td class="text-end">
+                                                <select id="discount" class="form-control" hidden>
+                                                    @foreach ($discounts as $discount)
+                                                        <option value="{{ $discount->time }}">Discount</option>
                                                     @endforeach
                                                 </select>
 
-                                                <script>
-                                                    document.addEventListener("DOMContentLoaded", function() {
-                                                        const now = new Date();
-                                                        const options = document.querySelectorAll('#users option');
-
-                                                        options.forEach(option => {
-                                                            const createdAt = new Date(option.getAttribute('data-created-at'));
-                                                            const diffInHours = (now - createdAt) / 1000 / 60 / 60;
-
-                                                            if (diffInHours < 24) {
-                                                                option.style.display = 'none'; // Hide if less than 24 hours
-                                                            }
-                                                        });
-                                                    });
-                                                </script>
-
-                                            </td>
-                                            <td class="text-end">
-                                                <select id="discount" class="form-control">
-                                                    <option value="0">No Discount</option>
-                                                    <option value="0.5">First 30 minutes</option>
-                                                    <option value="1">First 1 hour</option>
-                                                    <option value="2">First 2 hours</option>
-                                                    <option value="3">First 3 hours</option>
-                                                    <option value="4">First 4 hours</option>
-                                                    <option value="5">First 5 hours</option>
-                                                    <option value="full">Total hours</option>
-                                                </select>
                                             </td>
                                         </tr>
                                     </tbody> <!-- end tbody -->
@@ -143,6 +110,16 @@
                         </div>
                         <div class="col-sm-5">
                             <div class="float-end">
+                                <select id="users" class="form-control" data-choices name="choices-single-default">
+                                    <option value="0" selected>Unknown</option>
+                                    @foreach ($customers as $customer)
+                                        @if ($customer->created_at->toDateString() != \Carbon\Carbon::today()->toDateString())
+                                            <option value="{{ $customer->id }}">
+                                                {{ $customer->name }} : {{ $customer->phone }}
+                                            </option>
+                                        @endif
+                                    @endforeach
+                                </select>
                                 <p><span class="fw-medium">hours : </span>
                                     <span class="float-end"><span id="duration">{{ $data['duration'] }}</span>
                                 </p>
@@ -197,12 +174,14 @@
 
             let duration = parseFloat(document.getElementById('duration').innerText);
             const discount = document.getElementById('discount').value; // Get the selected discount
+            const user_id = document.getElementById('users').value;
             console.log('Duration Before Discount:', duration); // Debug original duration
             console.log('Selected Discount:', discount); // Debug selected discount
 
             // Find the rate object for the given device type
             const rate = rates.find(r => r.type === deviceType);
             console.log('Rate:', rate); // Debug rate object
+
 
             if (!rate || isNaN(rate.rate1) || isNaN(rate.rate2) || isNaN(rate.rate3) || isNaN(rate.rate2half) ||
                 isNaN(rate.rate3half)) {
@@ -274,27 +253,26 @@
             // Apply the discount
             let discountAmount = 0;
 
-            if (discount === '0.5') {
-                discountAmount = rate1 / 2; // 30 minutes = half of rate1
-            } else if (discount === '1') {
-                discountAmount = rate1; // First hour rate
-            } else if (discount === '2') {
-                discountAmount = rate1 + rate2; // First 2 hours = rate1 + 1 hour of rate2
-            } else if (discount === '3') {
-                discountAmount = rate1 + 2 * rate2; // First 3 hours = rate1 + 2 hours of rate2
-            } else if (discount === '4') {
-                discountAmount = rate1 + 3 * rate2; // First 4 hours = rate1 + 3 hours of rate2
-            } else if (discount === '5') {
-                discountAmount = rate1 + 4 * rate2; // First 5 hours = rate1 + 4 hours of rate2
-            } else if (discount === 'full') {
+            if (user_id != 0) {
                 totalAmount = 0; // Full duration released
                 alert('Full duration released. Amount is 0.');
                 document.getElementById('total-amount').innerText = '0.00';
                 return;
+            }else if (discount === '0.5') {
+                discountAmount = rate1 / 2; // 30 minutes = half of rate1
+            } else if (discount === '1.00') {
+                discountAmount = rate1; // First hour rate
+            } else if (discount === '5.00') {
+                discountAmount = rate1 / 12; // First 2 hours = rate1 + 1 hour of rate2
+            } else if (discount === '10.00') {
+                discountAmount = (rate1 / 60) * 10; // First 3 hours = rate1 + 2 hours of rate2
+            } else if (discount === '15.00') {
+                discountAmount = (rate1 / 60) * 15; // First 4 hours = rate1 + 3 hours of rate2
+            } else if (discount === '45.00') {
+                discountAmount = (rate1 / 60) * 45; // First 5 hours = rate1 + 4 hours of rate2
             }
 
             console.log('Discount Amount:', discountAmount); // Debug discount amount
-
             // Subtract the discount amount from the total amount
             totalAmount -= discountAmount;
 
@@ -317,10 +295,13 @@
             const discount = document.getElementById('discount').value; // Discount value
             const discountAvailability = discount === "0" ? 0 : 1; // Discount availability (0 or 1)
             const discountHours = discount; // Discount hours
-            const currentDate = new Date().toISOString(); // Current date and time in ISO format
+            const customer_id = document.getElementById('users').value;
+
 
             // Get the total amount after discount
             const totalAmount = parseFloat(document.getElementById('total-amount').innerText);
+
+            console.log(customer_id);
 
             // Send data to the controller via AJAX
             fetch('{{ route('payBill') }}', {
@@ -334,9 +315,9 @@
                         device_id: deviceId,
                         duration: duration,
                         discount_availability: discountAvailability,
-                        discount_hours: discountHours,
-                        date: currentDate,
-                        total_amount: totalAmount
+                        discount_hours: customer_id != 0 ? '0.01' : discountHours,
+                        total_amount: totalAmount,
+                        customer_id: customer_id
                     })
                 })
                 .then(response => response.json())

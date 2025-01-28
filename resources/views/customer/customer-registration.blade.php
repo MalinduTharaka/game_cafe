@@ -50,10 +50,12 @@
                             <form action="{{ route('customer.destroy', $customer->id) }}" method="POST" class="d-inline">
                                 @csrf
                                 @method('DELETE')
+                                @if (Auth::check() && Auth::user()->role === 'admin')
                                 <button type="submit" class="btn btn-danger btn-sm"
                                     onclick="return confirm('Are you sure you want to delete this customer?')">
                                     Delete
                                 </button>
+                                @endif
                             </form>
                         </td>
                     </tr>
@@ -62,7 +64,7 @@
         </table>
 
         <!-- Modal -->
-        <div class="modal fade" id="createCustomerModal" tabindex="-1" aria-labelledby="createCustomerModalLabel"
+        <div class="modal fade" id="createCustomerModal" tabindex="-1" data-bs-backdrop="static" aria-labelledby="createCustomerModalLabel"
             aria-hidden="true">
             <div class="modal-dialog">
                 <form method="POST" action="{{ route('customer.store') }}">
@@ -96,7 +98,7 @@
         </div>
 
         <!-- Edit Customer Modal -->
-        <div class="modal fade" id="editCustomerModal" tabindex="-1" aria-labelledby="editCustomerModalLabel"
+        <div class="modal fade" id="editCustomerModal" tabindex="-1" data-bs-backdrop="static" aria-labelledby="editCustomerModalLabel"
             aria-hidden="true">
             <div class="modal-dialog">
                 <form id="editCustomerForm" method="POST" action="">

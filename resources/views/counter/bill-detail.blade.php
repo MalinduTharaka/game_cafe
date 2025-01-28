@@ -143,7 +143,7 @@
                               <tr>
                                    <th scope="col">Device</th>
                                    <th scope="col">Duration (hrs)</th>
-                                   <th scope="col">Discount Given</th>
+                                   <th scope="col">Customer</th>
                                    <th scope="col">Discount Hours (hrs)</th>
                                    <th scope="col">Total Amount (Rs)</th>
                               </tr>
@@ -153,7 +153,9 @@
                                    <tr>
                                         <td>{{ $bill->device->name }}</td>
                                         <td>{{ $bill->duration }}</td>
-                                        <td>{{ $bill->discount_availability == 1 ? 'Yes' : 'No' }}</td>
+                                        <td>
+                                             {{ $bill->customer ? ($bill->customer->phone == '' ? 'None Registered' : $bill->customer->phone) : 'None Registered Customer' }}
+                                        </td>
                                         <td>{{ $bill->discount_time }}</td>
                                         <td>{{ $bill->total_amount }}</td>
                                    </tr>

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Discount;
 use App\Models\Rate;
 use Illuminate\Http\Request;
 
@@ -13,7 +14,8 @@ class RateController extends Controller
     public function index()
     {
         $rates = Rate::all(); // Fetch all rates from the database
-        return view('admin.paying-rates', compact('rates')); // Pass rates to the view
+        $discounts = Discount::all();
+        return view('admin.paying-rates', compact('rates','discounts')); // Pass rates to the view
     }
 
     /**
@@ -72,5 +74,12 @@ class RateController extends Controller
 
         // Redirect back with success message
         return redirect()->back()->with('success', 'Rate deleted successfully!');
+    }
+
+    public function updateDiscounts(Request $request, $id)
+    {
+        $dicount = Discount::findOrFail(1);
+        $dicount->update($request->all());
+        return redirect()->back()->with('success', 'Discount updated successfully!');
     }
 }

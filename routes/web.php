@@ -11,6 +11,7 @@ use App\Http\Controllers\RateController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\CustomerCreateController;
 use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\UserRegistrationController;
 use Illuminate\Support\Facades\Auth;
 
 Route::get('/', function () {
@@ -73,6 +74,14 @@ Route::middleware([
     Route::post('/generate-bill', [PaymentController::class, 'index']);
 
 
+    //Discounts
+    Route::put('/discountUpdate/{id}', [RateController::class, 'updateDiscounts'])->name('discount.Update');
+
+    //User Registration
+    Route::get('/user-registration', [UserRegistrationController::class, 'index']);
+    Route::post('/user-reg', [UserRegistrationController::class, 'store']);
+    Route::put('/user-reg/{id}', [UserRegistrationController::class, 'update']);
+    Route::delete('/user-reg/{id}', [UserRegistrationController::class, 'destroy']);
 
 });
 

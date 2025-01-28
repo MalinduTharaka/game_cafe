@@ -28,6 +28,7 @@ class Bill extends Model
         'discount_time',
         'date',
         'total_amount',
+        'customer_id'
     ];
 
     /**
@@ -36,5 +37,10 @@ class Bill extends Model
     public function device()
     {
         return $this->belongsTo(Device::class);
+    }
+
+    public function customer()
+    {
+        return $this->belongsTo(Customer::class);
     }
 }

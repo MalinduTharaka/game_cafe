@@ -42,18 +42,35 @@ public function payBill(Request $request)
             'duration' => 'required|numeric',
             'discount_availability' => 'required|boolean',
             'discount_hours' => 'required|string',
-            'date' => 'required|date',
             'total_amount' => 'required|numeric',
         ]);
+
+        $discountHour = 0;
+        if($request->discount_hours == '0.00'){
+            $discountHour = 0;
+        }elseif($request->discount_hours == '5.00'){
+            $discountHour = 0.05;
+        }elseif($request->discount_hours == '10.00'){
+            $discountHour = 0.10;
+        }elseif($request->discount_hours == '15.00'){
+            $discountHour = 0.25;
+        }elseif($request->discount_hours == '0.50'){
+            $discountHour = 0.50;
+        }elseif($request->discount_hours == '45.00'){
+            $discountHour = 0.75;
+        }elseif($request->discount_hours == '0.01'){
+            $discountHour = $request->duration;
+        }
 
         // Create a new bill entry
         $bill = new Bill();
         $bill->device_id = $request->device_id;
         $bill->duration = $request->duration;
         $bill->discount_availability = $request->discount_availability;
-        $bill->discount_time = $request->discount_hours;
-        $bill->date = Carbon::parse($request->date);  // Ensure date is correctly parsed
+        $bill->discount_time = $discountHour;
+        $bill->date = Carbon::today();  // Ensure date is correctly parsed
         $bill->total_amount = $request->total_amount;
+        $bill->customer_id = $request->customer_id;
         $gmSession = GmSession::find($request->id);
         $gmSession->payment = 'done'; // Assuming this is the correct column
         $gmSession->save();

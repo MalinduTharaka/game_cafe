@@ -2,11 +2,11 @@
     <!-- Sidebar Logo -->
     <div class="logo-box">
         <a href="/dashboard" class="logo-dark">
-            <img src="{{ asset('assets/images/playdium.jpg') }}" class="logo-sm" alt="logo sm">
+            <img src="{{ asset('assets/images/playdium-removebg.png') }}" class="logo-sm" alt="logo sm">
         </a>
 
         <a href="/dashboard" class="logo-light">
-            <img src="{{ asset('assets/images/playdium.jpg') }}" class="logo-sm" alt="logo sm">
+            <img src="{{ asset('assets/images/playdium-removebg.png') }}" class="logo-sm" alt="logo sm">
         </a>
     </div>
     <style>
@@ -53,7 +53,7 @@
                         <span class="nav-icon">
                             <iconify-icon icon="solar:list-heart-minimalistic-broken"></iconify-icon></iconify-icon>
                         </span>
-                        <span class="nav-text"> Count</span>
+                        <span class="nav-text"> Counter</span>
                     </a>
                 </li>
 
@@ -101,6 +101,16 @@
                         <span class="nav-text"> Filter</span>
                     </a>
                 </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="/user-registration">
+                        <span class="nav-icon">
+                            <iconify-icon icon="solar:home-2-broken"></iconify-icon>
+                        </span>
+                        <span class="nav-text"> system Users </span>
+                    </a>
+                </li>
+
             @elseif(Auth::check() && Auth::user()->role === 'counter')
                 <li class="nav-item">
                     <a class="nav-link" href="/dashboard">
@@ -116,7 +126,7 @@
                         <span class="nav-icon">
                             <iconify-icon icon="solar:list-heart-minimalistic-broken"></iconify-icon></iconify-icon>
                         </span>
-                        <span class="nav-text"> Count</span>
+                        <span class="nav-text"> Counter</span>
                     </a>
                 </li>
 

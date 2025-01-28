@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Customer;
 use App\Models\Device;
+use App\Models\Discount;
 use App\Models\GmSession;
 use App\Models\Rate;
 use App\Models\User;
@@ -30,7 +31,9 @@ class PaymentController extends Controller
         $gmid = GmSession::find($request->id);
         
         $devices = Device::all();
-        return view('counter.bill', compact('data', 'rates', 'devices','customers','gmid'));
+
+        $discounts = Discount::all();
+        return view('counter.bill', compact('data', 'rates', 'devices','customers','gmid','discounts'));
     }
 
 }
