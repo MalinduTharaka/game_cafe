@@ -76,6 +76,7 @@ Route::middleware([
 
     //Discounts
     Route::put('/discountUpdate/{id}', [RateController::class, 'updateDiscounts'])->name('discount.Update');
+    Route::get('/reset-discounts', [RateController::class, 'resetdiscounts'])->name('reset.discounts');
 
     //User Registration
     Route::get('/user-registration', [UserRegistrationController::class, 'index']);

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Bill;
 use App\Models\Customer;
 use App\Models\Device;
 use App\Models\Discount;
@@ -9,6 +10,7 @@ use App\Models\GmSession;
 use App\Models\Rate;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 class PaymentController extends Controller
 {
@@ -33,7 +35,9 @@ class PaymentController extends Controller
         $devices = Device::all();
 
         $discounts = Discount::all();
-        return view('counter.bill', compact('data', 'rates', 'devices','customers','gmid','discounts'));
+
+        $billtoday = Bill::whereDate('date', Carbon::today()->setTimezone('Asia/Colombo'))->get();
+        return view('counter.bill', compact('data', 'rates', 'devices','customers','gmid','discounts','billtoday'));
     }
 
 }

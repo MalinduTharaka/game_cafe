@@ -113,7 +113,7 @@
                                 <select id="users" class="form-control" data-choices name="choices-single-default">
                                     <option value="0" selected>Unknown</option>
                                     @foreach ($customers as $customer)
-                                        @if ($customer->created_at->toDateString() != \Carbon\Carbon::today()->toDateString())
+                                        @if ($customer->created_at->toDateString() != \Carbon\Carbon::today()->toDateString() && !$billtoday->contains('customer_id', $customer->id))
                                             <option value="{{ $customer->id }}">
                                                 {{ $customer->name }} : {{ $customer->phone }}
                                             </option>

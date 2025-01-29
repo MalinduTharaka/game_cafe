@@ -82,4 +82,12 @@ class RateController extends Controller
         $dicount->update($request->all());
         return redirect()->back()->with('success', 'Discount updated successfully!');
     }
+
+    public function resetdiscounts(){
+        $dicount = Discount::findOrFail(1);
+        $dicount->update([
+            'time' => 0.00
+        ]);
+        return redirect()->back()->with('success', 'Discount reset successfully!');
+    }
 }
