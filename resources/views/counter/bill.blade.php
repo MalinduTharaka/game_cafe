@@ -110,16 +110,58 @@
                         </div>
                         <div class="col-sm-5">
                             <div class="float-end">
+                                <link rel="stylesheet"
+                                    href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css" />
+                                <script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>
+
                                 <select id="users" class="form-control" data-choices name="choices-single-default">
-                                    <option value="0" selected>Unknown</option>
-                                    @foreach ($customers as $customer)
-                                        @if ($customer->created_at->toDateString() != \Carbon\Carbon::today()->toDateString() && !$billtoday->contains('customer_id', $customer->id))
-                                            <option value="{{ $customer->id }}">
-                                                {{ $customer->name }} : {{ $customer->phone }}
-                                            </option>
-                                        @endif
-                                    @endforeach
+                                    <option value="0" selected>Search for a customer...</option>
                                 </select>
+
+                                <script>
+                                    document.addEventListener('DOMContentLoaded', function() {
+                                        const customers = [
+                                            @foreach ($customers as $customer)
+                                                @if (
+                                                    $customer->created_at->toDateString() != \Carbon\Carbon::today()->toDateString() &&
+                                                        !$billtoday->contains('customer_id', $customer->id))
+                                                    {
+                                                        id: "{{ $customer->id }}",
+                                                        name: "{{ $customer->name }} : {{ $customer->phone }}"
+                                                    },
+                                                @endif
+                                            @endforeach
+                                        ];
+
+                                        const selectElement = document.getElementById('users');
+                                        const choices = new Choices(selectElement, {
+                                            searchEnabled: true,
+                                            shouldSort: false,
+                                            removeItemButton: true,
+                                            placeholderValue: 'Search for a customer...',
+                                            noResultsText: 'No customer found',
+                                            noChoicesText: 'Type to search',
+                                        });
+
+                                        // Show results only when searching
+                                        selectElement.addEventListener('search', function(event) {
+                                            const searchText = event.detail.value.toLowerCase();
+                                            const filteredCustomers = customers.filter(customer =>
+                                                customer.name.toLowerCase().includes(searchText)
+                                            );
+
+                                            choices.clearChoices(); // Clear previous options
+                                            if (filteredCustomers.length > 0) {
+                                                choices.setChoices(filteredCustomers.map(c => ({
+                                                    value: c.id,
+                                                    label: c.name
+                                                })));
+                                            }
+                                        });
+                                    });
+                                </script>
+
+
                                 <p><span class="fw-medium">hours : </span>
                                     <span class="float-end"><span id="duration">{{ $data['duration'] }}</span>
                                 </p>
@@ -258,7 +300,7 @@
                 alert('Full duration released. Amount is 0.');
                 document.getElementById('total-amount').innerText = '0.00';
                 return;
-            }else if (discount === '0.5') {
+            } else if (discount === '0.5') {
                 discountAmount = rate1 / 2; // 30 minutes = half of rate1
             } else if (discount === '1.00') {
                 discountAmount = rate1; // First hour rate
